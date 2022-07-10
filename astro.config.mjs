@@ -6,4 +6,5 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   integrations: [svelte(), tailwind()],
   site: "https://aleksanderbrymora.github.io/kb",
+  base: "/astro-kb",
 });
