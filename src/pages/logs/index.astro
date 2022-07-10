@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+const logs = await Astro.glob('./*.md');
+---
+
+<Layout title="Build logs">
+    <nav>
+        <a class="back-button" href="/"> Go back home </a>
+    </nav>
+    <main class="bg-yellow-400 h-full">
+        <section class="grid grid-cols-1 lg:grid-cols-2 p-12 gap-12">
+            {logs.map(({frontmatter: log}) => (
+            <a href={`/logs/${log.slug}`} class="card border-pink-600 border-4 w-full p-4 bg-blue-500">
+                <p class="text-white font-bold text-xl">{log.description}</p>
+                <p class="text-white font-black text-5xl md:text-6xl ">{log.title}</p>
+                <img src={log.featuredImage} alt={log.title} class="h-full w-full object-cover" />
+                <div class="overlay opacity-40 bg-zinc-900" tabindex="-1" />
+            </a>
+            ))}
+        </section>
+    </main>
+</Layout>
+
+<style lang="scss">
+    @mixin shadow-offset($size, $offset, $deg) {
+        box-shadow: $size $size;
+        transition: all 0.1s ease;
+        transform: rotate3d(-1, 1, 1, $deg);
+
+        &:hover {
+            box-shadow: $offset $offset;
+        }
+
+        &:active {
+            box-shadow: ($offset - $size) ($offset - $size);
+            transform: rotate3d(-1, 1, 1, $deg) translate($size, $size);
+        }
+    }
+
+    a.back-button {
+        @apply uppercase whitespace-nowrap font-black text-center py-6 px-12 border-4 border-black block w-min my-12 ml-12;
+        @include shadow-offset(5px, 10px, 15deg);
+        border-radius: 5px;
+    }
+
+    .card {
+        display: grid;
+        grid-template-rows: auto min-content min-content;
+        @include shadow-offset(5px, 10px, 15deg);
+
+        >* {
+            grid-column: 1;
+        }
+
+        img {
+            grid-row: 1 / span 3;
+            height: 300px;
+        }
+
+        p:first-of-type {
+            grid-row: 2;
+            z-index: 1;
+        }
+
+        p:last-of-type {
+            grid-row: 3;
+            z-index: 1;
+        }
+
+        .overlay {
+            grid-row: 1 / span 3;
+        }
+    }
+</style>

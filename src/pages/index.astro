@@ -1,0 +1,95 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const marqueeContent = [
+	'Keyboards',
+	'3D Printing',
+	'Ergonomics',
+	'CAD',
+	'Fusion 360',
+	'Programming',
+	'Marquees are cool',
+	'but like, why would you read this?',
+	"it's a waste of time",
+	"there's nothing more there",
+	'nothing else is comming',
+	'you do be cute tho',
+	'have a lovely day'
+];
+
+---
+
+<Layout title="Welcome to Astro.">
+	<header class="md:flex-row flex-col gap-20 flex justify-between items-center md:gap-8 p-10 ">
+		<h1 class="text-8xl lg:text-[14rem] underline">Qiqley</h1>
+		<a class="bg-red-600" href="/me">By Aleksander<br /> Brymora</a>
+	</header>
+
+	<marquee class="py-5 bg-black">
+		{marqueeContent.map(i => (
+		<>
+			<span class="font-bold text-5xl text-white">{i}</span>
+			<span class="font-bold text-5xl text-white mx-20">•</span>
+		</>
+		))}
+	</marquee>
+
+	<section class="nav-desc px-8 my-20">
+		<nav class="mx-auto rounded-md p-2 bg-violet-500 flex flex-col gap-8 py-8 w-full my-8">
+			<a class="bg-yellow-600" href="/blog"> Blog </a>
+			<a class="bg-pink-600" href="/logs">Build logs</a>
+		</nav>
+		<p class="text-left font-bold w-full text-2xl leading-tight md:text-6xl md:text-right">
+			A page about keyboards, ergonomics, designing around human body, 3D printing, CAD design and other nerdy
+			<em>(and probably ugly)</em> stuff.
+		</p>
+	</section>
+</Layout>
+
+
+<style lang="scss">
+	@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:wght@700&display=swap');
+
+	@mixin shadow-offset($size, $offset, $deg) {
+		box-shadow: $size $size;
+		transition: all 0.1s ease;
+		transform: rotate3d(-1, 1, 1, $deg);
+
+		&:hover {
+			box-shadow: $offset $offset;
+		}
+
+		&:active {
+			box-shadow: ($offset - $size) ($offset - $size);
+			transform: rotate3d(-1, 1, 1, $deg) translate($size, $size);
+		}
+	}
+
+	a {
+		@apply uppercase whitespace-nowrap font-black text-center py-6 px-12 border-4 border-black;
+		@include shadow-offset(5px, 15px, 45deg);
+	}
+
+	header {
+		h1 {
+			font-family: Bodoni Moda, sans-serif;
+			line-height: 100%;
+			font-stretch: extra-expanded;
+		}
+	}
+
+	.nav-desc {
+		display: grid;
+		grid-template-columns: min-content auto;
+
+		@media screen and (max-width: 800px) {
+			display: flex;
+			flex-direction: column;
+		}
+
+
+		nav {
+			box-shadow: 5px 5px;
+		}
+	}
+</style>

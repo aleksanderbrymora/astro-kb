@@ -1,0 +1,56 @@
+---
+import '../styles/index.scss';
+
+export interface Props {
+    title: string;
+}
+
+const { title } = Astro.props as Props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <title>{title}</title>
+</head>
+
+<body>
+    <nav class="flex sm:flex-row flex-col p-12 py-24 sm:py-12 gap-8 bg-pink-400">
+        <a class="bg-yellow-400" href='/'>Home</a>
+        <a class="bg-pink-400" href="/logs">Other logs</a>
+    </nav>
+    <main class="bg-pink-200 py-12 md:px-0 px-2">
+        <article
+            class="prose lg:prose-xl mx-auto prose-h1:text-violet-600 prose-a:text-pink-500 prose-img:border-8 prose-img:rounded-2xl prose-img:border-blue-400 prose-h2:text-purple-600  bg-zinc-100 px-4 py-8 md:px-8 rounded-2xl shadow-2xl ">
+            <slot />
+        </article>
+    </main>
+</body>
+
+</html>
+
+<style lang="scss">
+    @mixin shadow-offset($size, $offset, $deg) {
+        box-shadow: $size $size;
+        transition: all 0.1s ease;
+        transform: rotate3d(-1, 1, 1, $deg);
+
+        &:hover {
+            box-shadow: $offset $offset;
+        }
+
+        &:active {
+            box-shadow: ($offset - $size) ($offset - $size);
+            transform: rotate3d(-1, 1, 1, $deg) translate($size, $size);
+        }
+    }
+
+    a {
+        @apply uppercase whitespace-nowrap font-black text-center py-6 px-12 border-4 border-black;
+        @include shadow-offset(5px, 15px, 45deg);
+    }
+</style>
